@@ -1,0 +1,7 @@
+* text=auto
+
+# Shell/workflow files must stay LF
+*.sh text eol=lf
+*.yml text eol=lf
+.github/** text eol=lf
+*.py text eol=lf

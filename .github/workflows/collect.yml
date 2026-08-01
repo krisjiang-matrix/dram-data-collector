@@ -1,0 +1,55 @@
+name: Daily DRAM Data Collection
+
+on:
+  schedule:
+    # Runs at 01:17 UTC daily (= 09:17 GMT+8, after TrendForce's 17:50 GMT+8 spot price publish)
+    - cron: "17 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dram-collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    name: Scrape and commit DRAM prices
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Collect DRAM prices
+        run: npm run collect
+
+      - name: Commit data changes
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore(data): daily DRAM price snapshot $(date -u +%Y-%m-%d)"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Push changes
+        if: steps.commit.outputs.changed == 'true'
+        run: git push

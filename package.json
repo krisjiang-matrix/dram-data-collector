@@ -1,0 +1,22 @@
+{
+  "name": "dram-data-collector",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Daily DRAM spot price collector for TrendForce, deployed as a GitHub Actions cron + GitHub Pages dashboard",
+  "scripts": {
+    "collect": "tsx src/collect.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}

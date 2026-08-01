@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DRAM Spot Price Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div>
+        <h1>DRAM Spot Price Tracker</h1>
+        <p class="subtitle">Daily spot prices from TrendForce</p>
+      </div>
+      <div class="last-update">
+        <p class="label">Last updated</p>
+        <p id="lastUpdate" class="value">–</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="card-header">
+          <h2>Latest DRAM Spot Prices</h2>
+          <div class="filters" id="categoryFilters"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th class="num">Daily High</th>
+                <th class="num">Daily Low</th>
+                <th class="num">Session High</th>
+                <th class="num">Session Low</th>
+                <th class="num">Session Average</th>
+                <th class="num">Change</th>
+              </tr>
+            </thead>
+            <tbody id="latestRows">
+              <tr><td colspan="7" class="empty">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Price Trends</h2>
+          <p class="card-desc">Historical Session Average with inflection points</p>
+          <div class="filters" id="itemFilters"></div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="priceChart"></canvas>
+          <p id="chartEmpty" class="empty">No historical data yet.</p>
+        </div>
+      </section>
+
+      <section class="stats" id="stats">
+        <div class="stat-card">
+          <span class="dot red"></span>
+          <h3>Price Peaks</h3>
+          <p id="peakCount">0</p>
+        </div>
+        <div class="stat-card">
+          <span class="dot green"></span>
+          <h3>Price Valleys</h3>
+          <p id="valleyCount">0</p>
+        </div>
+        <div class="stat-card">
+          <span class="dot slate"></span>
+          <h3>Data Points</h3>
+          <p id="dataPointCount">0</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Source: <a href="https://www.trendforce.com/price/dram/dram_spot" target="_blank" rel="noopener">TrendForce DRAM Spot Price</a> · Collected daily via GitHub Actions</p>
+    </footer>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
